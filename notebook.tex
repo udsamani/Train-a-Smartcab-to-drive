@@ -1,0 +1,981 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{smartcab}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{reinforcement-learning-project}{%
+\section{Reinforcement Learning
+Project}\label{reinforcement-learning-project}}
+
+\hypertarget{train-a-smartcab-to-drive}{%
+\section{Train a Smartcab to Drive}\label{train-a-smartcab-to-drive}}
+
+    \hypertarget{getting-started}{%
+\subsection{Getting Started}\label{getting-started}}
+
+In this project, we will work towards constructing an optimized
+Q-Learning driving agent that will navigate a \emph{Smartcab} through
+its environment towards a goal. Since the \emph{Smartcab} is expected to
+drive passengers from one location to another, the driving agent will be
+evaluated on two very important metrics: \textbf{Safety} and
+\textbf{Reliability}. A driving agent that gets the \emph{Smartcab} to
+its destination while running red lights or narrowly avoiding accidents
+would be considered \textbf{unsafe}. Similarly, a driving agent that
+frequently fails to reach the destination in time would be considered
+\textbf{unreliable}. Maximizing the driving agent's \textbf{safety} and
+\textbf{reliability} would ensure that \emph{Smartcabs} have a permanent
+place in the transportation industry.
+
+\textbf{Safety} and \textbf{Reliability} are measured using a
+letter-grade system as follows:
+
+\begin{longtable}[]{@{}ccc@{}}
+\toprule
+\begin{minipage}[b]{0.23\columnwidth}\centering
+Grade\strut
+\end{minipage} & \begin{minipage}[b]{0.26\columnwidth}\centering
+Safety\strut
+\end{minipage} & \begin{minipage}[b]{0.42\columnwidth}\centering
+Reliability\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.23\columnwidth}\centering
+A+\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent commits no traffic violations,and always chooses the correct
+action.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent reaches the destination in timefor 100\% of trips.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\centering
+A\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent commits few minor traffic violations,such as failing to move on a
+green light.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent reaches the destination on timefor at least 90\% of trips.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\centering
+B\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent commits frequent minor traffic violations,such as failing to move
+on a green light.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent reaches the destination on timefor at least 80\% of trips.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\centering
+C\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent commits at least one major traffic violation, such as driving
+through a red light.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent reaches the destination on timefor at least 70\% of trips.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\centering
+D\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent causes at least one minor accident, such as turning left on green
+with oncoming traffic.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent reaches the destination on timefor at least 60\% of trips.\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.23\columnwidth}\centering
+F\strut
+\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\centering
+Agent causes at least one major accident,such as driving through a red
+light with cross-traffic.\strut
+\end{minipage} & \begin{minipage}[t]{0.42\columnwidth}\centering
+Agent fails to reach the destination on timefor at least 60\% of
+trips.\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+To assist evaluating these important metrics, we will use visualization
+code provided by Udacity.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Import the visualization code}
+        \PY{k+kn}{import} \PY{n+nn}{visuals} \PY{k}{as} \PY{n+nn}{vs}
+        
+        \PY{c+c1}{\PYZsh{} Pretty display for notebooks}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \hypertarget{understanding-the-world}{%
+\subsubsection{Understanding the World}\label{understanding-the-world}}
+
+Before starting to work on implementing your driving agent, it's
+necessary to first understand the world (environment) which the
+\emph{Smartcab} and driving agent work in. One of the major components
+to building a self-learning agent is understanding the characteristics
+about the agent, which includes how the agent operates.
+
+    The environment is made up of roads, intersections, the Smartcab, and
+other agents (cars), that seem to operate within traffic rules. Red and
+green traffic lights indicate when a car should stop or stay.
+
+Observations you might make upon running the simulation for the first
+time, without any learning or smartcab code:
+
+\begin{itemize}
+\tightlist
+\item
+  The Smartcab does not move at all during the simulation.
+\item
+  The agent is receiving a numerical reward, which is summed up over
+  positive and negative rewards taken with respect to change in the
+  environment, and the age
+\item
+  The agent receives a positive reward at a red light. That's probably
+  because it is a positive action and the car is supposed to stop at red
+  lights. Conversly, the agent receives a negative reward for staying
+  idle at green lights, as the car is supposed to move.
+\end{itemize}
+
+    \hypertarget{understanding-the-code}{%
+\subsubsection{Understanding the Code}\label{understanding-the-code}}
+
+In addition to understanding the world, it is also necessary to
+understand the code itself that governs how the world, simulation, and
+so on operate. Attempting to create a driving agent would be difficult
+without having at least explored the \emph{``hidden''} devices that make
+everything work.
+
+Let's see what the key mechanics of our program are:
+
+    \begin{itemize}
+\tightlist
+\item
+  In the \textbf{agents.py} Python file:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    the \emph{num\_dummies} flag changes the number of dummies in the
+    environment.
+  \item
+    the \emph{grid\_size} flag changes the number of intersections, in a
+    (columns,rows) format.
+  \item
+    the \emph{update\_delay} flag changes the update time of the
+    simulation, i.e.~the continuous update time between actions.
+  \end{itemize}
+\item
+  In the \textbf{environments.py} Python file, the \emph{act()} function
+  is called when an agent performs an action. The action is only
+  performed if it is legal.
+\item
+  In the \textbf{simulator.py} Python file, the \emph{render\_text()}
+  function renders the non-GUI display of the simulation, i.e.~the trial
+  data is rendered in the terminal or command prompt. The
+  \emph{render()} function renders the GUI display of the simualation
+  i.e.~the pygame module.
+\item
+  In the \textbf{planner.py} Python file, the \emph{next\_waypoint()}
+  function will consider the East-West direction first, after checking
+  if the destination isn't already at the location.
+\end{itemize}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{implementing-a-basic-driving-agent}{%
+\subsection{Implementing a Basic Driving
+Agent}\label{implementing-a-basic-driving-agent}}
+
+The first step to creating an optimized Q-Learning driving agent is
+getting the agent to actually take valid actions. In this case, a valid
+action is one of \texttt{None}, (do nothing)
+\texttt{\textquotesingle{}Left\textquotesingle{}} (turn left),
+\texttt{\textquotesingle{}Right\textquotesingle{}} (turn right), or
+\texttt{\textquotesingle{}Forward\textquotesingle{}} (go forward). For
+your first implementation, we will navigate to the
+\texttt{\textquotesingle{}choose\_action()\textquotesingle{}} agent
+function and make the driving agent randomly choose one of these
+actions. We have access to several class variables that will help us
+write this functionality, such as
+\texttt{\textquotesingle{}self.learning\textquotesingle{}} and
+\texttt{\textquotesingle{}self.valid\_actions\textquotesingle{}}.
+
+    \hypertarget{basic-agent-simulation-results}{%
+\subsubsection{Basic Agent Simulation
+Results}\label{basic-agent-simulation-results}}
+
+To obtain results from the initial simulation, we will need to adjust
+following flags: -
+\texttt{\textquotesingle{}enforce\_deadline\textquotesingle{}} - Set
+this to \texttt{True} to force the driving agent to capture whether it
+reaches the destination in time. -
+\texttt{\textquotesingle{}update\_delay\textquotesingle{}} - Set this to
+a small value (such as \texttt{0.01}) to reduce the time between steps
+in each trial. -
+\texttt{\textquotesingle{}log\_metrics\textquotesingle{}} - Set this to
+\texttt{True} to log the simluation results as a \texttt{.csv} file in
+\texttt{/logs/}. - \texttt{\textquotesingle{}n\_test\textquotesingle{}}
+- Set this to \texttt{\textquotesingle{}10\textquotesingle{}} to perform
+10 testing trials.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{c+c1}{\PYZsh{} Load the \PYZsq{}sim\PYZus{}no\PYZhy{}learning\PYZsq{} log file from the initial simulation results}
+         \PY{n}{vs}\PY{o}{.}\PY{n}{plot\PYZus{}trials}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sim\PYZus{}no\PYZhy{}learning.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{observations-of-a-basic-driving-agent}{%
+\paragraph{Observations of a Basic Driving
+Agent}\label{observations-of-a-basic-driving-agent}}
+
+\begin{itemize}
+\tightlist
+\item
+  The driving agent performs a bad action approximately 40\% of the
+  time. 5-10\% of the time it results in an accident.
+\item
+  The rate of reliability is about 10\%, but it doesn't make sense as
+  the agent is driving randomly. Even if the rate was higher, we
+  couldn't say the rate of reliability was reliable (pun unintended)
+  because it would be based on chance.
+\item
+  We see that the agent is actually receiving a negative reward for its
+  actions. This means that the agent is being penalized heavily, and the
+  negative rewards are outweighing the positive rewards, if any.
+\item
+  There isn't a significant change in the outcome of results, even with
+  the increase in the number of trials. This could be because our agent
+  is still making decisions randomly and not learning from it's
+  mistakes.
+\item
+  To summarize, the Smartcab would not be considered safe, because it
+  violates traffic rules and causes accidents too often for ur comfort.
+  It will also not be considered reliable, as it only managed to reach
+  its desination 10\% of the time. We'd want our cab to at least get us
+  to the airport at time if it's ploughing through the traffic
+  (actually, we don't want that either).
+\end{itemize}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{informing-the-driving-agent}{%
+\subsection{Informing the Driving
+Agent}\label{informing-the-driving-agent}}
+
+The second step to creating an optimized Q-learning driving agent is
+defining a set of states that the agent can occupy in the environment.
+Depending on the input, sensory data, and additional variables available
+to the driving agent, a set of states can be defined for the agent so
+that it can eventually \emph{learn} what action it should take when
+occupying a state. The condition of
+\texttt{\textquotesingle{}if\ state\ then\ action\textquotesingle{}} for
+each state is called a \textbf{policy}, and is ultimately what the
+driving agent is expected to learn. Without defining states, the driving
+agent would never understand which action is most optimal -- or even
+what environmental variables and conditions it cares about!
+
+    \hypertarget{identifying-states}{%
+\subsubsection{Identifying States}\label{identifying-states}}
+
+Inspecting the
+\texttt{\textquotesingle{}build\_state()\textquotesingle{}} agent
+function shows that the driving agent is given the following data from
+the environment: -
+\texttt{\textquotesingle{}waypoint\textquotesingle{}}, which is the
+direction the \emph{Smartcab} should drive leading to the destination,
+relative to the \emph{Smartcab}'s heading. -
+\texttt{\textquotesingle{}inputs\textquotesingle{}}, which is the sensor
+data from the \emph{Smartcab}. It includes -
+\texttt{\textquotesingle{}light\textquotesingle{}}, the color of the
+light. - \texttt{\textquotesingle{}left\textquotesingle{}}, the intended
+direction of travel for a vehicle to the \emph{Smartcab}'s left. Returns
+\texttt{None} if no vehicle is present. -
+\texttt{\textquotesingle{}right\textquotesingle{}}, the intended
+direction of travel for a vehicle to the \emph{Smartcab}'s right.
+Returns \texttt{None} if no vehicle is present. -
+\texttt{\textquotesingle{}oncoming\textquotesingle{}}, the intended
+direction of travel for a vehicle across the intersection from the
+\emph{Smartcab}. Returns \texttt{None} if no vehicle is present. -
+\texttt{\textquotesingle{}deadline\textquotesingle{}}, which is the
+number of actions remaining for the \emph{Smartcab} to reach the
+destination before running out of time.
+
+    Some questions we can ask ourselves at this stage are:
+
+\emph{Which features available to the agent are most relevant for
+learning both \textbf{safety} and \textbf{efficiency}? Why are these
+features appropriate for modeling the }Smartcab* in the environment? If
+you did not choose some features, why are those features* not
+\emph{appropriate?}
+
+    The `waypoint', `light',`oncoming' and `left' features are most relevant
+for learning both safety and efficiency.
+
+The `waypoint' helps leads the Smartcab to the destination through the
+most optimal way, improving the efficiency.
+
+The `oncoming' and `left' features contain the intended directions of
+travel of other cars near the Smartcab in the environment. We don't need
+to care about cabs on the `right', as they won't shouldn't forward on a
+red light, assuming they follow traffic rules, though we do need to
+check out for cars on the left before taking a right turn at a traffic
+light.
+
+The `light' feature makes our Smartcab aware of the traffic lights, so
+that it follows the rules and doesn't violate traffic laws.
+
+These set of input features are important to ensure the safety of the
+Smartcab and its passengers, as not being aware of other cars can lead
+to accidents, while being unaware of the traffic lights can lead to
+traffic violations and/or accidents.
+
+The `deadline' feature, is not important for the safety of the smartcab,
+while it may resemble some importance for the efficiency. Nevertheless,
+the feature isn't chosen as `important' because the waypoint feature
+should ensure that the chosen path is as optimal as it can be.
+
+    \hypertarget{defining-a-state-space}{%
+\subsubsection{Defining a State Space}\label{defining-a-state-space}}
+
+When defining a set of states that the agent can occupy, it is necessary
+to consider the \emph{size} of the state space. That is to say, if you
+expect the driving agent to learn a \textbf{policy} for each state, you
+would need to have an optimal action for \emph{every} state the agent
+can occupy. If the number of all possible states is very large, it might
+be the case that the driving agent never learns what to do in some
+states, which can lead to uninformed decisions. For example, consider a
+case where the following features are used to define the state of the
+\emph{Smartcab}:
+
+\texttt{(\textquotesingle{}is\_raining\textquotesingle{},\ \textquotesingle{}is\_foggy\textquotesingle{},\ \textquotesingle{}is\_red\_light\textquotesingle{},\ \textquotesingle{}turn\_left\textquotesingle{},\ \textquotesingle{}no\_traffic\textquotesingle{},\ \textquotesingle{}previous\_turn\_left\textquotesingle{},\ \textquotesingle{}time\_of\_day\textquotesingle{})}.
+
+How frequently would the agent occupy a state like
+\texttt{(False,\ True,\ True,\ True,\ False,\ False,\ \textquotesingle{}3AM\textquotesingle{})}?
+Without a near-infinite amount of time for training, it's doubtful the
+agent would ever learn the proper action!
+
+    Some questions we can ask ourselves at this stage are:
+
+\emph{If a state is defined using the features you've selected from the
+previous section, what would be the size of the state space? Given what
+you know about the evironment and how it is simulated, do you think the
+driving agent could learn a policy for each possible state within a
+reasonable number of training trials?}
+
+    Our chosen state space is (waypoint,lights,oncoming,left). The size will
+also be smaller than if we did consider using `deadine' for the state
+space.
+
+There are 3 possible values for `waypoint', 2 possible values for
+`lights' and 4 possible values for each of cars on `left',and `oncoming'
+(None, left, right, forward).
+
+The number of combinations here will, thus, be 3x2x4x4 = 96. So it is a
+reasonable number of policies for the agent to learn within a reasonable
+number of training trials. In a few hundred trials, our agent should be
+able to see each state at-least once.
+
+    \hypertarget{updating-the-driving-agent-state}{%
+\subsubsection{Updating the Driving Agent
+State}\label{updating-the-driving-agent-state}}
+
+For our second implementation, we will use the
+\texttt{\textquotesingle{}build\_state()\textquotesingle{}} agent
+function to set the \texttt{\textquotesingle{}state\textquotesingle{}}
+variable to a tuple of all the features necessary for Q-Learning.
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{implementing-a-q-learning-driving-agent}{%
+\subsection{Implementing a Q-Learning Driving
+Agent}\label{implementing-a-q-learning-driving-agent}}
+
+The third step to creating an optimized Q-Learning agent is to begin
+implementing the functionality of Q-Learning itself. The concept of
+Q-Learning is fairly straightforward: For every state the agent visits,
+create an entry in the Q-table for all state-action pairs available.
+Then, when the agent encounters a state and performs an action, update
+the Q-value associated with that state-action pair based on the reward
+received and the interative update rule implemented. Of course,
+additional benefits come from Q-Learning, such that we can have the
+agent choose the \emph{best} action for each state based on the Q-values
+of each state-action pair possible.
+
+For this project, we will be implementing a \emph{decaying,}
+\(\epsilon\)\emph{-greedy} Q-learning algorithm with \emph{no} discount
+factor.
+
+Note that the agent attribute \texttt{self.Q} is a dictionary: This is
+how the Q-table will be formed. Each state will be a key of the
+\texttt{self.Q} dictionary, and each value will then be another
+dictionary that holds the \emph{action} and \emph{Q-value}. Here is an
+example:
+
+\begin{verbatim}
+{ 'state-1': { 
+    'action-1' : Qvalue-1,
+    'action-2' : Qvalue-2,
+     ...
+   },
+  'state-2': {
+    'action-1' : Qvalue-1,
+     ...
+   },
+   ...
+}
+\end{verbatim}
+
+Furthermore, note that we are expected to use a \emph{decaying}
+\(\epsilon\) \emph{(exploration) factor}. Hence, as the number of trials
+increases, \(\epsilon\) should decrease towards 0. This is because the
+agent is expected to learn from its behavior and begin acting on its
+learned behavior.
+
+    \hypertarget{q-learning-simulation-results}{%
+\subsubsection{Q-Learning Simulation
+Results}\label{q-learning-simulation-results}}
+
+To obtain results from the initial Q-Learning implementation, we will
+need to adjust the following flags and setup: -
+\texttt{\textquotesingle{}enforce\_deadline\textquotesingle{}} - Set
+this to \texttt{True} to force the driving agent to capture whether it
+reaches the destination in time. -
+\texttt{\textquotesingle{}update\_delay\textquotesingle{}} - Set this to
+a small value (such as \texttt{0.01}) to reduce the time between steps
+in each trial. -
+\texttt{\textquotesingle{}log\_metrics\textquotesingle{}} - Set this to
+\texttt{True} to log the simluation results as a \texttt{.csv} file and
+the Q-table as a \texttt{.txt} file in \texttt{/logs/}. -
+\texttt{\textquotesingle{}n\_test\textquotesingle{}} - Set this to
+\texttt{\textquotesingle{}10\textquotesingle{}} to perform 10 testing
+trials. - \texttt{\textquotesingle{}learning\textquotesingle{}} - Set
+this to \texttt{\textquotesingle{}True\textquotesingle{}} to tell the
+driving agent to use your Q-Learning implementation.
+
+In addition, we can use the following decay function for \(\epsilon\):
+
+\[ \epsilon_{t+1} = \epsilon_{t} - 0.05, \hspace{10px}\textrm{for trial number } t\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{c+c1}{\PYZsh{} Load the \PYZsq{}sim\PYZus{}default\PYZhy{}learning\PYZsq{} file from the default Q\PYZhy{}Learning simulation}
+         \PY{n}{vs}\PY{o}{.}\PY{n}{plot\PYZus{}trials}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sim\PYZus{}default\PYZhy{}learning.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{observations-after-implementing-q-learning}{%
+\paragraph{Observations after implementing
+Q-Learning}\label{observations-after-implementing-q-learning}}
+
+There isn't much similarity between the basic driving agen and the
+default Q-Learning agent, as we can see that our agent has already
+started to learn, based on the visualizations.
+
+\begin{itemize}
+\tightlist
+\item
+  Frequency of total bad actions has dropped down to around 10\% from
+  40\% of an agent with no learning, and it keeps going down as the
+  number of training trials increases. We can also see a decrease in the
+  major and minor traffic violations.
+\item
+  We see an increase in the rate of reliability from 20\% to 70\%
+  between the 10th and 20th trials.
+\item
+  There's also an increase in the rolling average of reward per action
+  in a trial, from -3 to 0.5 between the 10th and 20th trials. This is
+  also better than the -5 reward per action in the no-learning driving
+  agent.
+\item
+  It took 20 trials for the driving agent before testing. This makes
+  sense for the epsilon, tolerance and decay value, since with a linear
+  decay of -0.05 and a starting epsilon of 1, it'll take 20 decays for
+  it to go below the threshold of 0.5.
+\item
+  We can actually visualize the decay in the visualizations above, as it
+  linearily decreases in a straight line.
+\item
+  Even with all these improvements, the safety and reliavility ratings
+  of our agent are still F. We'll need further improvements to get
+  better ratings.
+\end{itemize}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{improving-the-q-learning-driving-agent}{%
+\subsection{Improving the Q-Learning Driving
+Agent}\label{improving-the-q-learning-driving-agent}}
+
+The third step to creating an optimized Q-Learning agent is to perform
+the optimization! Now that the Q-Learning algorithm is implemented and
+the driving agent is successfully learning, it's necessary to tune
+settings and adjust learning paramaters so the driving agent learns both
+\textbf{safety} and \textbf{efficiency}. Typically this step requires a
+lot of trial and error, as some settings will invariably make the
+learning worse. One thing to keep in mind is the act of learning itself
+and the time that this takes: In theory, we could allow the agent to
+learn for an incredibly long amount of time; however, another goal of
+Q-Learning is to \emph{transition from experimenting with unlearned
+behavior to acting on learned behavior}. For example, always allowing
+the agent to perform a random action during training (if
+\(\epsilon = 1\) and never decays) will certainly make it \emph{learn},
+but never let it \emph{act}.
+
+    \hypertarget{improved-q-learning-simulation-results}{%
+\subsubsection{Improved Q-Learning Simulation
+Results}\label{improved-q-learning-simulation-results}}
+
+To obtain results from the initial Q-Learning implementation, you will
+need to adjust the following flags and setup: -
+\texttt{\textquotesingle{}enforce\_deadline\textquotesingle{}} - Set
+this to \texttt{True} to force the driving agent to capture whether it
+reaches the destination in time. -
+\texttt{\textquotesingle{}update\_delay\textquotesingle{}} - Set this to
+a small value (such as \texttt{0.01}) to reduce the time between steps
+in each trial. -
+\texttt{\textquotesingle{}log\_metrics\textquotesingle{}} - Set this to
+\texttt{True} to log the simluation results as a \texttt{.csv} file and
+the Q-table as a \texttt{.txt} file in \texttt{/logs/}. -
+\texttt{\textquotesingle{}learning\textquotesingle{}} - Set this to
+\texttt{\textquotesingle{}True\textquotesingle{}} to tell the driving
+agent to use your Q-Learning implementation. -
+\texttt{\textquotesingle{}optimized\textquotesingle{}} - Set this to
+\texttt{\textquotesingle{}True\textquotesingle{}} to tell the driving
+agent you are performing an optimized version of the Q-Learning
+implementation.
+
+Additional flags that can be adjusted as part of optimizing the
+Q-Learning agent: - \texttt{\textquotesingle{}n\_test\textquotesingle{}}
+- Set this to some positive number (previously 10) to perform that many
+testing trials. - \texttt{\textquotesingle{}alpha\textquotesingle{}} -
+Set this to a real number between 0 - 1 to adjust the learning rate of
+the Q-Learning algorithm. -
+\texttt{\textquotesingle{}epsilon\textquotesingle{}} - Set this to a
+real number between 0 - 1 to adjust the starting exploration factor of
+the Q-Learning algorithm. -
+\texttt{\textquotesingle{}tolerance\textquotesingle{}} - set this to
+some small value larger than 0 (default was 0.05) to set the epsilon
+threshold for testing.
+
+Furthermore, we should use a decaying function of your choice for
+\(\epsilon\) (the exploration factor). Note that whichever function we
+use, it \textbf{must decay to
+}\texttt{\textquotesingle{}tolerance\textquotesingle{}}** at a
+reasonable rate**. The Q-Learning agent will not begin testing until
+this occurs. Some example decaying functions (for \(t\), the number of
+trials):
+
+\[ \epsilon = a^t, \textrm{for } 0 < a < 1 \hspace{50px}\epsilon = \frac{1}{t^2}\hspace{50px}\epsilon = e^{-at}, \textrm{for } 0 < a < 1 \hspace{50px} \epsilon = \cos(at), \textrm{for } 0 < a < 1\]
+You may also use a decaying function for \(\alpha\) (the learning rate)
+if you so choose, however this is typically less common. If you do so,
+be sure that it adheres to the inequality \(0 \leq \alpha \leq 1\).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{c+c1}{\PYZsh{} Load the \PYZsq{}sim\PYZus{}improved\PYZhy{}learning\PYZsq{} file from the improved Q\PYZhy{}Learning simulation}
+         \PY{n}{vs}\PY{o}{.}\PY{n}{plot\PYZus{}trials}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sim\PYZus{}improved\PYZhy{}learning.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{observarions-after-improving-q-learning-driving-agent}{%
+\paragraph{Observarions after improving Q-Learning Driving
+Agent}\label{observarions-after-improving-q-learning-driving-agent}}
+
+Quick glance at the visualizations show considerable improvements in our
+driving agent. In more detail:
+
+\begin{itemize}
+\tightlist
+\item
+  The decay function used for the agent is:
+  \[ \epsilon = a^t, \textrm{for } 0 < a < 1 \ \] the function ensures
+  that agent favours exploration for approx. the first third of trials,
+  so as to explore the most possible states. Only afterwards, it starts
+  choosing the optimal actions to fine tune the states.
+\item
+  Approx. 300 trials were needed for the agent before it began testing.
+\item
+  Epsilon, tolerance, and alpha rates were kept at default. Although, we
+  chose a constant of 0.99 to start our decay, so that we received the
+  approx. 300 trials which were necessry for training. Since we had 96
+  possible states to choose from. 300 trials ensures that each state is
+  easily encountered more than once.
+\item
+  The improvement has been immense. For 10 testing trials, the agent has
+  received an A+ for both safety and reliability. We can see the
+  improvements in rate of reliability in the visualization for training
+  to approx. 100\%. There are improvements in terms of bad actions as
+  well, with a drop to 0\% for all negative actions except a slight
+  random increase in major violations. This might be due to the smartcab
+  trying to keep its reliability up and jumping lights when there's no
+  danger.
+\item
+  Since the driving agent receives the best rating for both safety and
+  reliability, I would say that the agent has learned the appropriate
+  policy, and the results are satisfactory.
+\end{itemize}
+
+    \hypertarget{defining-an-optimal-policy}{%
+\subsubsection{Defining an Optimal
+Policy}\label{defining-an-optimal-policy}}
+
+Sometimes, the answer to the important question \emph{``what am I trying
+to get my agent to learn?''} only has a theoretical answer and cannot be
+concretely described. Here, however, we can concretely define what it is
+the agent is trying to learn, and that is the U.S. right-of-way traffic
+laws. Since these laws are known information, you can further define,
+for each state the \emph{Smartcab} is occupying, the optimal action for
+the driving agent based on these laws. In that case, we call the set of
+optimal state-action pairs an \textbf{optimal policy}. Hence, unlike
+some theoretical answers, it is clear whether the agent is acting
+``incorrectly'' not only by the reward (penalty) it receives, but also
+by pure observation. If the agent drives through a red light, we both
+see it receive a negative reward but also know that it is not the
+correct behavior. This can be used to our advantage for verifying
+whether the \textbf{policy} the driving agent has learned is the correct
+one, or if it is a \textbf{suboptimal policy}.
+
+    \hypertarget{examples-of-policies}{%
+\subsubsection{Examples of Policies}\label{examples-of-policies}}
+
+Let's check out a few examples (using the states we've defined) of what
+an optimal or sub-optimal policy for this problem would look like.
+
+    To recap, our defined state space was: (waypoint, inputs{[}`light'{]},
+inputs{[}`oncoming'{]}, inputs{[}`left'{]})
+
+A few examples of optimal policy for this problem, with respect to our
+state space can be:
+
+\begin{itemize}
+\tightlist
+\item
+  State: (forward,red,forward,left) \textbar{} Action: None \textbar{}
+  Staying idle at a red light.
+\item
+  State: (right,green,forward,right) \textbar{} Action: right \textbar{}
+  Following the waypoint on a green light.
+\item
+  State: (right,red,forward,None) \textbar{} Action: right \textbar{}
+  Taking a right on a red light (allowed in U.S.) if there are no
+  vehicles on the left.
+\end{itemize}
+
+Looking at the entries in the sim\_improved\_learning.txt file, the
+policies are mostly correct for the given states.
+
+For example, looking at the Q table for the following state: (`right',
+`red', `forward', None) - None : 1.21 - forward : -12.74 - right : 2.12
+- left : -10.75
+
+The correct action to take is in fact right, as discussed above (state 3
+in the examples).
+
+But there are cases where the recorded policy is in-fact, subotimal. For
+example, looking at the Q table for the following state: (`forward',
+`green', `forward', `left') - None : -4.27 - forward : 0.00 - right :
+0.88 - left : -9.91
+
+The policy here is to turn right, while the optimal action would have
+been to follow the waypoint and move forward, as the car non the left
+looking to turn left will not because of the traffic lights (which will
+be red in its case).
+
+So there are some examples where our agent has not learned the optimal
+policies in the given amount of training time.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
